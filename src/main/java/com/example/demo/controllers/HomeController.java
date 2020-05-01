@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
     @GetMapping("/index")
-    public User GetAll(){
-        User us = new User();
-        us.setId(1);
-        us.setName("Alex");
-        return us;
+    public String GetAll(){
+        return null;
     }
 }
