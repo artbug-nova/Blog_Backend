@@ -26,6 +26,13 @@ public class PostController {
         return postRepository.findAll();
     }
 
+
+    @GetMapping("/gets")
+    public List<Post> GetPost(String PostName, String PostStatus){
+        List<Post> byPostNameAndId = postRepository.findByPostNameOrPostStatus(PostName, PostStatus);
+        return byPostNameAndId;
+    }
+
     @PostMapping("/add")
     public Post Post(@RequestBody Post post){
         return postRepository.save(post);
