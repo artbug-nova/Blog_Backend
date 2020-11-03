@@ -18,7 +18,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("userDetailsServiceImpl")
     @Autowired
@@ -41,9 +41,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity security) throws Exception{
         security.httpBasic().disable();
-        security.antMatcher("/**")
-                .authorizeRequests()
-                .antMatchers("/").permitAll();
+        security.authorizeRequests()
+                .antMatchers("/home/index").hasAnyAuthority("USER")
+                .antMatchers("/**").permitAll();
         security.csrf().disable();
         security.cors();
     }
