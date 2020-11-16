@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Post {
     private String postName;
 
     @Column(name = "post_status", nullable = false)
+    @ApiModelProperty(value = "Статус поста", example = "Create")
     private String postStatus;
 
 

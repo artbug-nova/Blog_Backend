@@ -1,6 +1,13 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.PostDTO;
+import com.example.demo.dto.PostSup;
+import com.example.demo.mapper.PostMapper;
 import com.example.demo.models.Post;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +18,17 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/post")
+@RequestMapping(value = "/api/post", produces = "application/json")
+@Slf4j
+@Api(value = "Вернуть все посты", description = "Вовзрвщает все")
 public class PostController {
+
     @Autowired
     private PostRepository postRepository;
 
     @GetMapping("/{id}")
     public Post Get(@PathVariable(value = "id") Long postId) throws Exception {
+
         return postRepository.findById(postId).orElseThrow(()-> new Exception("not found"));
     }
 
@@ -28,14 +39,17 @@ public class PostController {
 
 
     @GetMapping("/gets")
+    @ApiOperation(value = "Вовзращает посты", response = List.class)
     public List<Post> GetPost(String PostName, String PostStatus){
         List<Post> byPostNameAndId = postRepository.findByPostNameOrPostStatus(PostName, PostStatus);
         return byPostNameAndId;
     }
-
+    @ApiOperation(value = "Add post")
     @PostMapping("/add")
-    public Post Post(@RequestBody Post post){
-        return postRepository.save(post);
+    public PostDTO Post(@RequestBody PostSup post){
+        PostMapper mapper = Mappers.getMapper(PostMapper.class);
+        return mapper.fromPost(post);
+        //return postRepository.save(post);
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<Post> Put(@PathVariable(value = "id") Long id, @RequestBody Post post) throws Exception {
