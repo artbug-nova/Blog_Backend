@@ -36,7 +36,7 @@ public class PostController {
         return "Hello World";
     }
 
-    @GetdemoMapping("/all")
+    @GetMapping("/all")
     public List<Post> getAllPost(){
         return postRepository.findAll();
     }
