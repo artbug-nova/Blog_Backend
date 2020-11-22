@@ -5,5 +5,5 @@ import com.example.blog.dto.PostSup;
 
 
 public interface PostMapper {
-    PostDTO fromPost(PostSup post);
+
 }
