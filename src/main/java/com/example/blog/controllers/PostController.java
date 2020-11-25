@@ -36,6 +36,13 @@ public class PostController {
         return "Hello World";
     }
 
+    @GetMapping("/mapper")
+    public PostDTO GetMapper(){
+        Post p = new Post();
+        p.setPostName("Alexses");
+        p.setPostStatus("New");
+        return PostMapper.INSTANCE.fromPost(p);
+    }
     @GetMapping("/all")
     public List<Post> getAllPost(){
         return postRepository.findAll();
@@ -47,13 +54,6 @@ public class PostController {
     public List<Post> GetPost(String PostName, String PostStatus){
         List<Post> byPostNameAndId = postRepository.findByPostNameOrPostStatus(PostName, PostStatus);
         return byPostNameAndId;
-    }
-    @ApiOperation(value = "Add post")
-    @PostMapping("/add")
-    public PostDTO Post(@RequestBody PostSup post){
-        PostMapper mapper = Mappers.getMapper(PostMapper.class);
-        return mapper.fromPost(post);
-        //return postRepository.save(post);
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<Post> Put(@PathVariable(value = "id") Long id, @RequestBody Post post) throws Exception {
