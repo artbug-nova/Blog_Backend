@@ -1,3 +1,6 @@
+server:
+  port: 9000
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/blog
@@ -10,12 +13,21 @@ spring:
       ddl-auto: validate
     show-sql: true
     database-platform: org.hibernate.dialect.PostgreSQL92Dialect
-  flyway:
-    enabled: false
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    template:
+      routing-key: myrabbitmq.routingkey
+      default-receive-queue: myrabbitmq.queue
+      exchange: myrabbitmq.direct
+
+
 
   liquibase:
     enabled: true
     change-log: classpath:/data/changelog/db.changelog.master.xml
 
-server:
-  port: 9000
+
