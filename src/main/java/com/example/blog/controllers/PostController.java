@@ -1,17 +1,14 @@
 package com.example.blog.controllers;
 
 import com.example.blog.dto.PostDTO;
-import com.example.blog.dto.PostSup;
 import com.example.blog.mapper.PostMapper;
 import com.example.blog.models.Post;
+import com.example.blog.repository.PostRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.blog.repository.PostRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,8 +20,11 @@ import java.util.Map;
 @Api(value = "Вернуть все посты", description = "Вовзрвщает все")
 public class PostController {
 
-    @Autowired
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
+
+    public PostController(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
 
     @GetMapping("/{id}")
     public Post Get(@PathVariable(value = "id") Long postId) throws Exception {
@@ -33,6 +33,7 @@ public class PostController {
     }
     @GetMapping("/getsss")
     public String Gets(){
+        log.info("dasda");
         return "Hello World";
     }
 
