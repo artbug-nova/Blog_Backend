@@ -14,9 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/api/post", produces = "application/json")
-@Slf4j
 @Api(value = "Вернуть все посты", description = "Вовзрвщает все")
 public class PostController {
 

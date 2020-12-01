@@ -13,9 +13,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Blog_BackEnd</name>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -147,5 +144,9 @@
         </plugins>
         <finalName>blog-final</finalName>
     </build>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
 
 </project>

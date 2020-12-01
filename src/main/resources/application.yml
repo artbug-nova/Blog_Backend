@@ -24,10 +24,6 @@ spring:
       default-receive-queue: myrabbitmq.queue
       exchange: myrabbitmq.direct
 
-
-
   liquibase:
     enabled: true
     change-log: classpath:/data/changelog/db.changelog.master.xml
-
-
