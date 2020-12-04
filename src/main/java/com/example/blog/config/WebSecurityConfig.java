@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity security) throws Exception{
         security.httpBasic().disable();
         security.authorizeRequests()
-                .antMatchers("/user/**").hasAnyAuthority("USER")
+                .antMatchers("/user11/**").hasAnyAuthority("USER")
                 .anyRequest().permitAll();
         security.csrf().disable();
         security.cors();

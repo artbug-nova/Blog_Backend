@@ -19,6 +19,7 @@ public class SpringSwaggerConfig {
                 .apis((RequestHandlerSelectors.any()))
                 .paths(PathSelectors.regex("/.*"))
                 .paths(Predicates.not(PathSelectors.regex("/error.*")))
+                .paths(Predicates.not(PathSelectors.regex("/graphiql.*")))
                 .build();
     }
 }

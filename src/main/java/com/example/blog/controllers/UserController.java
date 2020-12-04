@@ -4,29 +4,36 @@ import com.example.blog.models.User;
 import com.example.blog.modelui.UserUi;
 import com.example.blog.service.SecurityService;
 import com.example.blog.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private SecurityService securityService;
+    private final SecurityService securityService;
+
+    private final UserDetailsService userDetailsService;
+
+    public UserController(SecurityService securityService, UserService userService, @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
+        this.securityService = securityService;
+        this.userService = userService;
+        this.userDetailsService = userDetailsService;
+    }
 
     @PostMapping("/registration")
     public User registration(@RequestBody User userRequset) throws Exception {
         userService.save(userRequset);
-        securityService.autoLogin(userRequset.getUserName(), userRequset.getPasswordConfirm());
-
         return userRequset;
     }
 
 
     @PostMapping("/login")
     public User login(@RequestBody User userRequest){
+        UserDetails userDetails = userDetailsService.loadUserByUsername(userRequest.getUserName());
         return userRequest;
     }
 

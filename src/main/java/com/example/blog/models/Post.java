@@ -1,43 +1,27 @@
 package com.example.blog.models;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "post")
 public class Post {
-    @JsonIgnore
     @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
-    private long Id;
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    private Long Id;
 
+    @ApiModelProperty(value = "Имя поста", example = "Имя")
     @Column(name = "post_name", nullable = false)
     private String postName;
 
-    @Column(name = "post_status", nullable = false)
     @ApiModelProperty(value = "Статус поста", example = "Create")
+    @Column(name = "post_status", nullable = false)
     private String postStatus;
-
-
-    public String getPostName() {
-        return postName;
-    }
-
-    public void setPostName(String postName) {
-        this.postName = postName;
-    }
-
-    public String getPostStatus() {
-        return postStatus;
-    }
-
-    public void setPostStatus(String postStatus) {
-        this.postStatus = postStatus;
-    }
 
 }
