@@ -27,3 +27,8 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:/data/changelog/db.changelog.master.xml
+
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: your_password

@@ -1,4 +1,4 @@
-package com.example.blog.endpoint;swagger-ui.html#/
+package com.example.blog.endpoint;
 
 import com.example.blog.wsdlrepo.CountryRepository;
 import io.spring.guides.gs_producing_web_service.GetCountryRequest;
