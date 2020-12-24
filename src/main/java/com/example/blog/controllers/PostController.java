@@ -35,7 +35,7 @@ public class PostController {
         return postRepository.findAll();
     }
 
-    @PostMapping("/addPost2")
+    @PostMapping("/addPost3")
     public Post addPost(@RequestBody Post post){
         postRepository.save(post);
         return post;
