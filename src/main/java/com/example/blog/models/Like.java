@@ -18,7 +18,7 @@ public class Like {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @ApiModelProperty(value = "Имя лайка", example = "Имя дайка")
+    @ApiModelProperty(value = "Имя", example = "Имя дайка")
     @Column(name = "name_like")
     private String name;
 
