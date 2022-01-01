@@ -1,9 +1,0 @@
-type Post{
-    Id:ID!,
-    postName:String!,
-    postStatus:String!
-}
-
-type Query{
-    Posts:[Post]
-}

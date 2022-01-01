@@ -4,7 +4,11 @@ import com.example.blog.models.Like;
 import com.example.blog.repository.LikeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +30,7 @@ public class LikeController {
     }
 
     @PostMapping("/addLike")
+    @Transactional(propagation = Propagation.MANDATORY, isolation = Isolation.READ_COMMITTED)
     public Like addLike(@RequestBody Like like){
         likeRepository.save(like);
         return like;
@@ -35,7 +40,7 @@ public class LikeController {
     public ResponseEntity<Like> updateLike(@PathVariable(value = "id") Long id, @RequestBody Like like) throws Exception{
         Like likeModel = likeRepository.findById(id).orElseThrow(() -> new Exception("Like not found"));
         likeModel.setName(like.getName());
-        likeModel.setPost(like.getPost());
+        //likeModel.setPost(like.getPost());
         final Like updateLike = likeRepository.save(likeModel);
         return ResponseEntity.ok(likeModel);
     }

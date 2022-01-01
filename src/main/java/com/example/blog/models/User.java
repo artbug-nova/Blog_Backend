@@ -22,8 +22,4 @@ public class User {
 
     @Transient
     private String passwordConfirm;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = true)
-    private Role role;
 }

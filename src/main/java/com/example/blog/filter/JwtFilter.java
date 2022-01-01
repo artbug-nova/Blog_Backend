@@ -1,6 +1,6 @@
 package com.example.blog.filter;
 
-import com.example.blog.service.UserDetailsServiceImpl;
+import com.example.blog.service.impl.UserDetailsServiceImpl;
 import com.example.blog.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

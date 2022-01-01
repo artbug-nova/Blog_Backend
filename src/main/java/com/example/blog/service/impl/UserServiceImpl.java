@@ -1,10 +1,9 @@
-package com.example.blog.service;
+package com.example.blog.service.impl;
 
+import com.example.blog.models.User;
 import com.example.blog.repository.RoleRepository;
 import com.example.blog.repository.UserRepository;
-import com.example.blog.models.Role;
-import com.example.blog.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.blog.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +26,8 @@ public class UserServiceImpl implements UserService {
             Long id = (long)a;
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-            Role role = roleRepository.findById(id).orElseThrow(()-> new Exception());
-            user.setRole(role);
+            //Role role = roleRepository.findById(id).orElseThrow(()-> new Exception());
+            //user.setRole(role);
             userRepository.save(user);
 
         }

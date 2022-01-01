@@ -2,11 +2,9 @@ package com.example.blog.controllers;
 
 import com.example.blog.dto.AuthRequest;
 import com.example.blog.models.User;
-import com.example.blog.modelui.UserUi;
 import com.example.blog.service.SecurityService;
 import com.example.blog.service.UserService;
 import com.example.blog.utils.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -61,11 +59,7 @@ public class UserController {
     }
 
     @GetMapping("/getuser")
-    public UserUi get(String name){
-        User user = userService.findByuserName(name);
-        UserUi userUi = new UserUi();
-        userUi.setUserName(user.getUserName());
-        userUi.setPassword(user.getPassword());
-        return userUi;
+    public User get(String name){
+        return userService.findByuserName(name);
     }
 }
