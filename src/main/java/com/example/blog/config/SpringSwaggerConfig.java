@@ -1,6 +1,5 @@
 package com.example.blog.config;
 
-import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -12,12 +11,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SpringSwaggerConfig {
     public Docket api(){
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
                 .select()
                 .apis((RequestHandlerSelectors.any()))
                 .paths(PathSelectors.regex("/.*"))
-                .paths(Predicates.not(PathSelectors.regex("/error.*")))
-                .paths(Predicates.not(PathSelectors.regex("/graphiql.*")))
+                .paths(PathSelectors.regex("/error.*").negate())
+                .paths(PathSelectors.regex("/graphiql.*").negate())
                 .build();
     }
 }
