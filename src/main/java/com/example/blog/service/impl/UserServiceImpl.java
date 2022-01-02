@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
         }
         catch (Exception exp){
-
+            System.out.println(exp.getMessage());
         }
 
     }

@@ -14,6 +14,7 @@
     <name>Blog_BackEnd</name>
 
     <properties>
+        <package.name>blog</package.name>
         <java.version>1.8</java.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
     </properties>
@@ -113,46 +114,11 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-activemq</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-spring-boot-starter</artifactId>
-            <version>5.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-java-tools</artifactId>
-            <version>5.2.4</version>
-        </dependency>
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphiql-spring-boot-starter</artifactId>
-            <version>5.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>wsdl4j</groupId>
-            <artifactId>wsdl4j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>5.2.13.RELEASE</version>
         </dependency>
-    </dependencies>
+     </dependencies>
 
     <build>
         <plugins>
@@ -176,7 +142,7 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.10</version>
+                            <version>1.18.16</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
@@ -187,6 +153,6 @@
                 <version>3.0.5</version>
             </plugin>
         </plugins>
-        <finalName>blog-final</finalName>
+        <finalName>${artifactId}</finalName>
     </build>
 </project>

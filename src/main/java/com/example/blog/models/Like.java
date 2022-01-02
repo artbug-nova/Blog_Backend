@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "like_post")
+@Table(name = "likes")
 public class Like {
 
     @Id
@@ -21,4 +23,7 @@ public class Like {
 
     @Column(name = "author_like")
     private String author;
+
+    @ManyToMany(mappedBy = "likes")
+    private Set<Post> posts = new HashSet<>();
 }

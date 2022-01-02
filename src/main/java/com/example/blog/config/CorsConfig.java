@@ -1,6 +1,5 @@
 package com.example.blog.config;
 
-import com.google.common.collect.ImmutableList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -13,10 +12,10 @@ public class CorsConfig {
     CorsConfigurationSource corsConfigurationSource()
     {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(ImmutableList.of("*"));
-        configuration.setAllowedMethods(ImmutableList.of("*"));
+        //configuration.setAllowedOrigins(ImmutableList.of("*"));
+        //configuration.setAllowedMethods(ImmutableList.of("*"));
         configuration.setAllowCredentials(true);
-        configuration.setAllowedHeaders(ImmutableList.of("*"));
+        //configuration.setAllowedHeaders(ImmutableList.of("*"));
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
