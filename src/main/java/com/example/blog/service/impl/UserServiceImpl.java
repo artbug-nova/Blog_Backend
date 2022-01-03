@@ -1,5 +1,6 @@
 package com.example.blog.service.impl;
 
+import com.example.blog.models.Role;
 import com.example.blog.models.User;
 import com.example.blog.repository.RoleRepository;
 import com.example.blog.repository.UserRepository;
@@ -11,34 +12,34 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, RoleRepository roleRepository, UserRepository userRepository) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.passwordEncoder = bCryptPasswordEncoder;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
     }
 
-    @Override
-    public void save(User user)  {
-        try{
-            int a = 1;
-            Long id = (long)a;
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
-            //Role role = roleRepository.findById(id).orElseThrow(()-> new Exception());
-            //user.setRole(role);
-            userRepository.save(user);
-
-        }
-        catch (Exception exp){
-            System.out.println(exp.getMessage());
-        }
-
+    public User save(User user) {
+        Long roleId = user.getRole().getId();
+        Role userRole = roleRepository.findById(roleId)
+                .orElseThrow(() -> new RuntimeException(String.format("Role (id = %d) not found", roleId)));
+        user.setRole(userRole);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
-    @Override
-    public User findByuserName(String userName) {
-        return userRepository.findByuserName(userName);
+    public User findByUserName(String login) {
+        return userRepository.findByuserName(login);
+    }
+
+    public User findByUserNameAndPassword(String login, String password) {
+        User userEntity = findByUserName(login);
+        if (userEntity != null) {
+            if (passwordEncoder.matches(password, userEntity.getPassword())) {
+                return userEntity;
+            }
+        }
+        return null;
     }
 }

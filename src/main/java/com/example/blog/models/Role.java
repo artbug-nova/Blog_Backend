@@ -1,13 +1,17 @@
 package com.example.blog.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "role")
 public class Role {
     @Id
@@ -16,4 +20,8 @@ public class Role {
 
     @Column(name = "role_name")
     private String Name;
+
+    @OneToMany(mappedBy="role")
+    @JsonBackReference
+    private Set<User> users;
 }

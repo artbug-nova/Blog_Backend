@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+
+    <changeSet id="initial_likes" author="artbug">
+        <sql>
+            CREATE TABLE public.likes (
+                id bigserial NOT NULL,
+                author_like varchar(255) NULL,
+                name_like varchar(255) NULL,
+                CONSTRAINT likes_pkey PRIMARY KEY (id)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE public.likes;
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

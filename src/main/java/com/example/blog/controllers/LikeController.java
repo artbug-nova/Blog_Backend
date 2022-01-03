@@ -1,56 +1,47 @@
 package com.example.blog.controllers;
 
 import com.example.blog.models.Like;
-import com.example.blog.repository.LikeRepository;
+import com.example.blog.service.LikeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RequestMapping(value = "api/like", produces = "application/json")
 @RestController
 public class LikeController {
-    private final LikeRepository likeRepository;
+    private final LikeService likeService;
 
-    public LikeController(LikeRepository likeRepository) {
-        this.likeRepository = likeRepository;
+    public LikeController(LikeService likeRepository) {
+        this.likeService = likeRepository;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/getAll")
     public List<Like> getAll(){
-        return likeRepository.findAll();
+        return likeService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public Like getById(@PathVariable(value = "id") Long id) {
+        return likeService.getById(id);
     }
 
     @PostMapping("/addLike")
-    @Transactional(propagation = Propagation.MANDATORY, isolation = Isolation.READ_COMMITTED)
     public Like addLike(@RequestBody Like like){
-        likeRepository.save(like);
-        return like;
+        return likeService.save(like);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Like> updateLike(@PathVariable(value = "id") Long id, @RequestBody Like like) throws Exception{
-        Like likeModel = likeRepository.findById(id).orElseThrow(() -> new Exception("Like not found"));
-        likeModel.setName(like.getName());
-        //likeModel.setPost(like.getPost());
-        final Like updateLike = likeRepository.save(likeModel);
+    public ResponseEntity<Like> updateLike(@RequestBody Like like) {
+        Like likeModel = likeService.update(like);
         return ResponseEntity.ok(likeModel);
     }
 
     @DeleteMapping("/delete/{id}")
-    public Map<String, Boolean> deleteLike(@PathVariable(value = "id") Long id) throws Exception {
-        Like like = likeRepository.findById(id).orElseThrow(() -> new Exception("Like not found"));
-        likeRepository.delete(like);
-        Map<String, Boolean> deleted = new HashMap();
-        deleted.put(like.getName(), true);
-        return deleted;
+    public String deleteLike(@PathVariable(value = "id") Long id) {
+        likeService.delete(id);
+        return "Ok";
     }
 }

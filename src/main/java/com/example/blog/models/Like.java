@@ -1,6 +1,7 @@
 package com.example.blog.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,5 +26,6 @@ public class Like {
     private String author;
 
     @ManyToMany(mappedBy = "likes")
+    @JsonBackReference
     private Set<Post> posts = new HashSet<>();
 }

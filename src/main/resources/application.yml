@@ -8,27 +8,13 @@ spring:
     password: postgres
 
   jpa:
-    generate-ddl: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     show-sql: true
     database-platform: org.hibernate.dialect.PostgreSQL92Dialect
 
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-    template:
-      routing-key: myrabbitmq.routingkey
-      default-receive-queue: myrabbitmq.queue
-      exchange: myrabbitmq.direct
-
   liquibase:
-    enabled: false
     change-log: classpath:/data/changelog/db.changelog.master.xml
 
-  activemq:
-    broker-url: tcp://localhost:61616
-    user: admin
-    password: your_password
+jwt:
+  secret: jwtsecret

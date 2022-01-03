@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <changeSet id="initial_posts_likes" author="artbug">
+        <sql>
+            CREATE TABLE public.posts_likes (
+                posts_id int8 NOT NULL,
+                likes_id int8 NOT NULL,
+                CONSTRAINT posts_likes_pkey PRIMARY KEY (posts_id, likes_id)
+            );
+        </sql>
+        <rollback>
+            DROP TABLE public.posts_likes;
+        </rollback>
+    </changeSet>
+    <changeSet id="add_constraint_posts" author="artbug">
+        <sql>
+            ALTER TABLE public.posts_likes ADD CONSTRAINT fk10chiuq09q8l4re9q3sjl7w5c FOREIGN KEY (likes_id) REFERENCES likes(id);
+        </sql>
+    </changeSet>
+
+    <changeSet id="add_constraint_likes" author="artbug">
+        <sql>
+            ALTER TABLE public.posts_likes ADD CONSTRAINT fkikope7hmhbwatdc2ruhgo475q FOREIGN KEY (posts_id) REFERENCES posts(id)
+        </sql>
+    </changeSet>
+</databaseChangeLog>

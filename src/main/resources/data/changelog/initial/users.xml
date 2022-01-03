@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <changeSet id="inital_users" author="artbug">
+        <sql>
+            CREATE TABLE public.users (
+                id bigserial NOT NULL,
+                "password" varchar(255) NOT NULL,
+                user_name varchar(255) NOT NULL,
+                role_id int8 NULL,
+                CONSTRAINT users_pkey PRIMARY KEY (id)
+            );
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE public.users;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="initial_users_constraint" author="artbug">
+        <sql>
+            ALTER TABLE public.users ADD CONSTRAINT fk4qu1gr772nnf6ve5af002rwya FOREIGN KEY (role_id) REFERENCES role(id);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

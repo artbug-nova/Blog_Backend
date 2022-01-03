@@ -1,65 +1,42 @@
 package com.example.blog.controllers;
 
-import com.example.blog.dto.AuthRequest;
 import com.example.blog.models.User;
-import com.example.blog.service.SecurityService;
 import com.example.blog.service.UserService;
 import com.example.blog.utils.JwtUtil;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
     private final JwtUtil jwtUtil;
 
-    private final AuthenticationManager authenticationManager;
-
     private final UserService userService;
 
-    private final SecurityService securityService;
-
-    private final UserDetailsService userDetailsService;
-
-    public UserController(SecurityService securityService, UserService userService, @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
-        this.securityService = securityService;
+    public UserController(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
-        this.userDetailsService = userDetailsService;
-        this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/registration")
-    public User registration(@RequestBody User userRequset) throws Exception {
-        userService.save(userRequset);
-        return userRequset;
+    @GetMapping("/getByUserName")
+    public User getByUserName(String userName){
+        return userService.findByUserName(userName);
     }
 
-
-    @PostMapping("/login")
-    public User login(@RequestBody User userRequest){
-        UserDetails userDetails = userDetailsService.loadUserByUsername(userRequest.getUserName());
-        return userRequest;
+    @GetMapping("/getByLoginAndPassword")
+    public User getByLoginAndPassword(String userName, String password){
+        return userService.findByUserNameAndPassword(userName, password);
     }
 
-    @PostMapping("/authenticate")
-    public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
-            );
-        } catch (Exception ex) {
-            throw new Exception("inavalid username/password");
-        }
-        return jwtUtil.generateToken(authRequest.getUserName());
+    @PostMapping("/register")
+    public User registerUser(@RequestBody @Valid User registrationUser) {
+        return userService.save(registrationUser);
     }
 
-    @GetMapping("/getuser")
-    public User get(String name){
-        return userService.findByuserName(name);
+    @GetMapping("/auth")
+    public String auth(String userName, String password) {
+        User userEntity = userService.findByUserNameAndPassword(userName, password);
+        return jwtUtil.generateToken(userEntity.getUserName());
     }
 }
